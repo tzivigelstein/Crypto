@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react'
-import Formulario from './components/Formulario'
-import Cotizacion from './components/Cotizacion'
+import Form from './components/Form'
+import Quote from './components/Quote'
 import Spinner from './components/Spinner'
-import imagen from './assets/cryptomonedas.png'
+import image from './assets/crypto.png'
 import styled from '@emotion/styled'
 import axios from 'axios'
 
@@ -26,7 +26,7 @@ const Contenedor = styled.div`
   }
 `
 
-const Imagen = styled.img`
+const Image = styled.img`
   max-width: 100%;
   margin-top: 5rem;
 `
@@ -54,47 +54,42 @@ const Heading = styled.h1`
 `
 
 function App() {
-  const [moneda, setMoneda] = useState('')
-  const [criptoMoneda, setCriptoMoneda] = useState('')
-  const [cotizacion, setCotizacion] = useState({})
+  const [exchange, setExchange] = useState('')
+  const [crypto, setCrypto] = useState('')
+  const [quote, setQuote] = useState({})
   const [loading, setLoading] = useState(false)
 
   useEffect(() => {
-    if (moneda === '') return
+    if (exchange === '') return
 
     const fetchAPI = async () => {
-      const url = `https://min-api.cryptocompare.com/data/pricemultifull?fsyms=${criptoMoneda}&tsyms=${moneda}`
-
-      const resultado = await axios.get(url)
-
-      //Spinner
+      const url = `https://min-api.cryptocompare.com/data/pricemultifull?fsyms=${crypto}&tsyms=${exchange}`
 
       setLoading(true)
-
-      //Ocultar Spinner
-
-      setTimeout(() => {
+      try {
+        const resultado = await axios.get(url)
+        setQuote(resultado.data.DISPLAY[crypto][exchange])
+      } catch (error) {
+        console.log(error)
         setLoading(false)
-        setCotizacion(resultado.data.DISPLAY[criptoMoneda][moneda])
-      }, 700)
+      }
+      setLoading(false)
     }
 
     fetchAPI()
-  }, [moneda, criptoMoneda])
+  }, [exchange, crypto])
 
-  //Mostrar Spinner o Cotizacion
-
-  const componente = loading ? <Spinner /> : <Cotizacion cotizacion={cotizacion} />
+  const component = loading ? <Spinner /> : <Quote quote={quote} />
 
   return (
     <Contenedor>
       <div>
-        <Imagen src={imagen} alt="crypto" />
+        <Image src={image} alt="crypto" />
       </div>
       <div>
         <Heading>Cotiza criptomonedas al instante</Heading>
-        <Formulario setMoneda={setMoneda} setCriptoMoneda={setCriptoMoneda} />
-        {componente}
+        <Form setExchange={setExchange} setCrypto={setCrypto} />
+        {component}
       </div>
     </Contenedor>
   )

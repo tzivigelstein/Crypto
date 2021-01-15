@@ -2,7 +2,7 @@ import React from 'react'
 import styled from '@emotion/styled'
 import PropTypes from 'prop-types'
 
-const Mensaje = styled.p`
+const Message = styled.p`
   background-color: #b7322c;
   padding: 1rem;
   color: #fff;
@@ -13,11 +13,12 @@ const Mensaje = styled.p`
   font-family: 'Bebas Neue', cursive;
 `
 
-const Error = ({ mensaje }) => {
-  return <Mensaje>{mensaje}</Mensaje>
+const Error = ({ msg }) => {
+  return <Message>{msg}</Message>
 }
 
 Error.propTypes = {
-  mensaje: PropTypes.string.isRequired,
+  msg: PropTypes.string.isRequired,
 }
+
 export default Error
