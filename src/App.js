@@ -79,17 +79,18 @@ function App() {
     fetchAPI()
   }, [exchange, crypto])
 
-  const component = loading ? <Spinner /> : <Quote quote={quote} />
-
   return (
     <Contenedor>
-      <div>
-        <Image src={image} alt="crypto" />
+      <div style={{ display: 'flex', alignItems: 'center' }}>
+        {Object.keys(quote).length === 0 && loading ? (
+          <Spinner />
+        ) : (
+          <>{Object.keys(quote).length !== 0 ? <Quote quote={quote} /> : <Image src={image} alt="crypto" />}</>
+        )}
       </div>
       <div>
         <Heading>Cotiza criptomonedas al instante</Heading>
         <Form setExchange={setExchange} setCrypto={setCrypto} />
-        {component}
       </div>
     </Contenedor>
   )
