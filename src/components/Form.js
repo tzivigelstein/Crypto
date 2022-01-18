@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import useExchange from '../hooks/useExchange'
 import useCrypto from '../hooks/useCrypto'
 import Error from './Error'
-import axios from 'axios'
+import enviroment from '../utils/enviroment'
 import styled from '@emotion/styled'
 
 const Button = styled.input`
@@ -53,13 +53,13 @@ const Form = ({ setExchange, setCrypto }) => {
   const [exchange, SelectExchange] = useExchange('Elige tu moneda', EXCHANGES)
   const [crypto, SelectCrypto] = useCrypto('Elige tu criptomoneda', list)
 
+  const { cryptosTickersUrl } = enviroment
+
   useEffect(() => {
     const fetchAPI = async () => {
-      const url = 'https://min-api.cryptocompare.com/data/top/mktcapfull?limit=10&tsym=USD'
-
-      const res = await axios.get(url)
-
-      setList(res.data.Data)
+      await fetch(cryptosTickersUrl)
+        .then(response => response.json())
+        .then(({ Data }) => setList(Data))
     }
     fetchAPI()
   }, [])
