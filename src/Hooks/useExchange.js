@@ -26,10 +26,12 @@ const useExchange = (label, options) => {
     <Fragment>
       <Label>{label}</Label>
       <Select onChange={e => setState(e.target.value)} value={state}>
-        <option>Seleccione una Moneda</option>
-        {options.map(option => (
-          <option value={option.codigo} key={option.id}>
-            {option.nombre}
+        <option defaultValue="default" disabled={state !== ''}>
+          Seleccione una Moneda
+        </option>
+        {options.map(({ codigo, id, nombre }) => (
+          <option value={codigo} key={id}>
+            {nombre}
           </option>
         ))}
       </Select>

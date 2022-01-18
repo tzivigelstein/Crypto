@@ -27,7 +27,9 @@ const useCrypto = (label, options) => {
     <Fragment>
       <Label>{label}</Label>
       <Select onChange={e => setState(e.target.value)} value={state}>
-        <option>Seleccione una Criptomoneda</option>
+        <option defaultValue="default" disabled={state !== ''}>
+          Seleccione una Criptomoneda
+        </option>
         {options.map(option => (
           <option value={option.CoinInfo.Name} key={option.CoinInfo.Id}>
             {option.CoinInfo.FullName}
