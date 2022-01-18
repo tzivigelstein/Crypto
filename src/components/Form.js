@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react'
-import useExchange from '../Hooks/useExchange'
-import useCrypto from '../Hooks/useCrypto'
+import useExchange from '../hooks/useExchange'
+import useCrypto from '../hooks/useCrypto'
 import Error from './Error'
 import axios from 'axios'
 import styled from '@emotion/styled'
-import PropTypes from 'prop-types'
 
 const Button = styled.input`
   margin-top: 20px;
@@ -32,23 +31,23 @@ const Form = ({ setExchange, setCrypto }) => {
     {
       id: 0,
       codigo: 'USD',
-      nombre: 'Dolar USA',
+      nombre: 'Dólar USA'
     },
     {
       id: 1,
       codigo: 'ARS',
-      nombre: 'Peso Argentino',
+      nombre: 'Peso Argentino'
     },
     {
       id: 2,
       codigo: 'EUR',
-      nombre: 'Euro',
+      nombre: 'Euro'
     },
     {
       id: 3,
-      codigo: 'GDP',
-      nombre: 'Libra Esterlina',
-    },
+      codigo: 'GBP',
+      nombre: 'Libra Esterlina'
+    }
   ]
 
   const [exchange, SelectExchange] = useExchange('Elige tu moneda', EXCHANGES)
@@ -86,11 +85,6 @@ const Form = ({ setExchange, setCrypto }) => {
       <Button type="submit" value="Cotizar" />
     </form>
   )
-}
-
-Form.propTypes = {
-  setExchange: PropTypes.func.isRequired,
-  setCrypto: PropTypes.func.isRequired,
 }
 
 export default Form
