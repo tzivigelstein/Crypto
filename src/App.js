@@ -4,7 +4,7 @@ import Quote from './components/Quote'
 import Spinner from './components/Spinner'
 import image from './assets/crypto.png'
 import styled from '@emotion/styled'
-import axios from 'axios'
+import getCryptoData from './utils/getCryptoData'
 
 const Contenedor = styled.div`
   max-width: 900px;
@@ -61,22 +61,11 @@ function App() {
 
   useEffect(() => {
     if (exchange === '') return
-
-    const fetchAPI = async () => {
-      const url = `https://min-api.cryptocompare.com/data/pricemultifull?fsyms=${crypto}&tsyms=${exchange}`
-
-      setLoading(true)
-      try {
-        const resultado = await axios.get(url)
-        setQuote(resultado.data.DISPLAY[crypto][exchange])
-      } catch (error) {
-        console.log(error)
-        setLoading(false)
-      }
-      setLoading(false)
-    }
-
-    fetchAPI()
+    setLoading(true)
+    getCryptoData({ crypto, exchange })
+      .then(setQuote)
+      .finally(() => setLoading(false))
+      .catch(console.error)
   }, [exchange, crypto])
 
   return (
