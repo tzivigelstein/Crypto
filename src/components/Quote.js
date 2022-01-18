@@ -1,6 +1,5 @@
 import React from 'react'
 import styled from '@emotion/styled'
-import PropTypes from 'prop-types'
 
 const Result = styled.div`
   color: #fff;
@@ -26,28 +25,27 @@ const Price = styled.p`
 const Quote = ({ quote }) => {
   if (Object.keys(quote).length === 0) return null
 
+  const { price, highDay, lowDay, change24Hour, lastUpdate } = quote
+
   return (
     <Result>
       <Price>
-        El precio es de: <span>{quote.PRICE}</span>
+        El precio es de: <span>{price}</span>
       </Price>
       <Info>
-        El precio máximo es de: <span>{quote.HIGHDAY}</span>
+        El precio máximo es de: <span>{highDay}</span>
       </Info>
       <Info>
-        El precio mínimo es de: <span>{quote.LOWDAY}</span>
+        El precio mínimo es de: <span>{lowDay}</span>
       </Info>
       <Info>
-        Variacion dentro de las ultimas 24hs: <span>{quote.CHANGEPCT24HOUR}</span>
+        Variacion dentro de las ultimas 24hs: <span>{`${change24Hour}%`}</span>
       </Info>
       <Info>
-        Actualizado: <span>{quote.LASTUPDATE}</span>
+        Actualizado: <span>{lastUpdate}</span>
       </Info>
     </Result>
   )
 }
 
-Quote.propTypes = {
-  quote: PropTypes.object.isRequired,
-}
 export default Quote
